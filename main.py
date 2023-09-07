@@ -14,18 +14,23 @@ snake = []
 for i in range(3):
     new_segment = Turtle(shape="square")
     new_segment.penup()
-    new_segment.speed(1)
     new_segment.color("white")
     new_segment.setx(i * -20)
     snake.append(new_segment)
 
+screen.update()
 game_is_on = True
 
 while game_is_on:
-    for seg in snake:
-        seg.forward(20)
+    snake[0].forward(20)
+
+    for seg_num in range(len(snake) - 1, 0, -1):
+        new_x = snake[seg_num - 1].xcor()
+        new_y = snake[seg_num - 1].ycor()
+        snake[seg_num].goto(new_x, new_y)
+
     screen.update()
-    time.sleep(0.5)
+    time.sleep(0.2)
 
 
 screen.exitonclick()
