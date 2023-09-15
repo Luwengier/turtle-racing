@@ -9,9 +9,16 @@ class Scoreboard(Turtle):
         self.hideturtle()
         self.goto(0, 270)
         self.color("white")
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
         self.write(f"score: {self.point}", False, "center", ("Arial", 20, "bold"))
 
     def gotcha(self):
-        self.clear()
         self.point += 1
-        self.write(f"score: {self.point}", False, "center", ("Arial", 20, "bold"))
+        self.clear()
+        self.update_scoreboard()
+
+    def game_over(self):
+        self.goto(0, 0)
+        self.write("- GAME OVER -", False, "center", ("Arial", 25, "normal"))
