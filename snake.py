@@ -10,24 +10,30 @@ DOWN = 270
 
 class Snake:
     def __init__(self) -> None:
-        self.segment = []
+        self.segments = []
 
         for i in range(3):
-            new_segment = Turtle(shape="square")
-            new_segment.penup()
-            new_segment.color("white")
-            new_segment.setx(i * -MOVE_DISTANCE)
-            self.segment.append(new_segment)
+            self.add_segment((i * -MOVE_DISTANCE, 0))
 
-        self.head = self.segment[0]
+        self.head = self.segments[0]
+
+    def add_segment(self, position):
+        new_segment = Turtle(shape="square")
+        new_segment.penup()
+        new_segment.color("white")
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        self.add_segment(self.segments[-1].position())
 
     def move(self):
-        for seg_num in range(len(self.segment) - 1, 0, -1):
-            new_x = self.segment[seg_num - 1].xcor()
-            new_y = self.segment[seg_num - 1].ycor()
-            self.segment[seg_num].goto(new_x, new_y)
+        for seg_num in range(len(self.segments) - 1, 0, -1):
+            new_x = self.segments[seg_num - 1].xcor()
+            new_y = self.segments[seg_num - 1].ycor()
+            self.segments[seg_num].goto(new_x, new_y)
 
-        self.segment[0].forward(MOVE_DISTANCE)
+        self.segments[0].forward(MOVE_DISTANCE)
 
     def right(self):
         if self.head.heading() != LEFT:
